@@ -34,11 +34,51 @@ namespace Exercise.Tests
             Assert.True(outcome.Count == count + 3 - neg, "The negative elements were not removed");
             try
             {
-            } catch (KeyNotFoundException ex)
+                var vsum = Math.Round(outcome["sum"], 10);
+                var vmult = Math.Round(outcome["mult"], 10);
+                var vdiv = Math.Round(outcome["div"], 10);
+                Assert.True(vsum == Math.Round(sum, 10), $"You should have returned sum: {sum}, but did return sum: {vsum}.");
+                Assert.True(vsum == Math.Round(mult, 10), $"You should have returned mult: {mult} but did return mult: {vmult}.");
+                Assert.True(vsum == Math.Round(div, 10), $"You should have returned div: {div} but did return div: {vdiv}.");
+            }
+            catch (KeyNotFoundException ex)
             {
                 Console.Error.WriteLine(ex.Message);
             }
         }
-        
+
+        [Theory]
+        [InlineData(new string[] {"-1", "cat 0", "-4", "lille 1", "3", "cat 2", "-4", "cat 3", "2", "lille 4", },2,-2, 12, "lille")]
+        [InlineData(new string[] { "4", "cat 0", "2", "cat 1", "1", "cat 2", "-1", "cat 3", "4", "cat 4" }, 0, 10, -32, "mouse")]
+        [InlineData(new string[] { "7", "lille 0", "-7", "lille 1", "0", "lille 2", "-7", "lille 3", "3", "lille 4" }, 5, 0, 0, "lille")]
+        [InlineData(new string[] { "-5", "cat 0", "-4", "cat 1 mouse", "2", "cat 2 mouse", "-5", "cat 3", "3", "cat 4", "-3", "cat 5", "1", "cat 6", "2", "cat 7 mouse", "-1", "cat 8", "0", "cat 9 mouse", "-4", "cat 10 mouse", "1", "cat 11", "4", "cat 12 mouse", "-1", "cat 13", "-3", "cat 14 mouse", "-3", "cat 15", "4", "cat 16", "0", "cat 17 mouse", "3", "cat 18 mouse", "-2", "cat 19", "2", "cat 20", "-2", "cat 21", "-4", "cat 22", "4", "cat 23", "1", "cat 24", "-4", "cat 25 mouse", "2", "cat 26 mouse", "-4", "cat 27", "0", "cat 28", "0", "cat 29 mouse", "-2", "cat 30 mouse", "-5", "cat 31", "3", "cat 32", "-2", "cat 33", "1", "cat 34 mouse", "4", "cat 35", "4", "cat 36", "-5", "cat 37 mouse", "-2", "cat 38", "4", "cat 39 mouse", "-5", "cat 40", "-1", "cat 41", "-2", "cat 42 mouse", "0", "cat 43", "4", "cat 44", "-1", "cat 45 mouse", "-2", "cat 46 mouse", "-5", "cat 47 mouse", "-3", "cat 48", "0", "cat 49", "2", "cat 50", "1", "cat 51 mouse", "-3", "cat 52 mouse", "0", "cat 53 mouse", "0", "cat 54", "3", "cat 55", "-4", "cat 56 mouse", "2", "cat 57", "0", "cat 58 mouse", "4", "cat 59", "0", "cat 60", "0", "cat 61", "-2", "cat 62", "-5", "cat 63", "-4", "cat 64", "-1", "cat 65", "1", "cat 66 mouse", "-4", "cat 67 mouse", "-1", "cat 68 mouse", "3", "cat 69 mouse", "-5", "cat 70 mouse", "3", "cat 71 mouse", "-1", "cat 72", "1", "cat 73 mouse", "3", "cat 74 mouse", "-3", "cat 75", "-4", "cat 76", "1", "cat 77 mouse", "4", "cat 78", "0", "cat 79", "1", "cat 80", "-1", "cat 81", "4", "cat 82 mouse", "0", "cat 83", "-1", "cat 84", "2", "cat 85", "-4", "cat 86", "-5", "cat 87 mouse", "-3", "cat 88 mouse", "4", "cat 89", "-1", "cat 90", "-1", "cat 91", "-5", "cat 92", "-4", "cat 93", "-3", "cat 94", "0", "cat 95", "4", "cat 96 mouse", "-5", "cat 97 mouse", "0", "cat 98 mouse", "1", "cat 99 mouse" }, 41, -35, 0, "mouse")]
+        public void Test2(string[] values, int neg, double sum, double mult, string remove)
+        {
+            var dictionary = new Dictionary<string, double>();
+            for (int i = 0; i < values.Length - 1; i += 2)
+            {
+                double number = 0;
+                double.TryParse(values[i], out number);
+                dictionary.Add(values[i + 1], number);
+            }
+            var count = dictionary.Count;
+            prog.RetrieveCalValues(dictionary,remove);
+            Assert.True(dictionary.ContainsKey("sum"), "Missing key for the sum of the entries");
+            Assert.True(dictionary.ContainsKey("mult"), "Missing key for the product of the entries");
+            Assert.True(dictionary.Count == count + 2 - neg, "The selected elements were not removed");
+            try
+            {
+                var vsum = Math.Round(dictionary["sum"], 10);
+                var vmult = Math.Round(dictionary["mult"], 10);
+                Assert.True(vsum == Math.Round(sum, 10), $"You should have returned sum: {sum}, but did return sum: {vsum}.");
+                Assert.True(vsum == Math.Round(mult, 10), $"You should have returned mult: {mult} but did return mult: {vmult}.");
+            }
+            catch (KeyNotFoundException ex)
+            {
+                Console.Error.WriteLine(ex.Message);
+            }
+        }
+
+   
     }
 }
