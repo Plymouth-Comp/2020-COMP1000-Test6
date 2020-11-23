@@ -79,6 +79,37 @@ namespace Exercise.Tests
             }
         }
 
-   
+        [Theory]
+        [InlineData(new string[] { "-1", "rupt cor0", "-4", "cor rupt1", "3", "cat 2", "-4", "corupt 3", "2", " 4 cor ru pt4", }, 2, -2, 12, "corrupt")]
+        [InlineData(new string[] { "4", "cat 0hous", "2", "cat 1 mouse", "1", "hat 2 ous", "-1", "cat 3", "4", "hou cat 4e" }, 0, 10, -32, "house")]
+        [InlineData(new string[] { "7", "Lli belle 0", "-7", "lAiBlClDe 1", "0", "lie downlle 2", "-7", "lilL le 3", "3", "l ill e 4", "3", "lile 4" }, 5, 3, 3, "lille")]
+        public void Test3(string[] values, int neg, double sum, double mult, string remove)
+        {
+            var dictionary = new Dictionary<string, double>();
+            for (int i = 0; i < values.Length - 1; i += 2)
+            {
+                double number = 0;
+                double.TryParse(values[i], out number);
+                dictionary.Add(values[i + 1], number);
+            }
+            var count = dictionary.Count;
+            prog.RetrieveCalValues(dictionary, remove);
+            Assert.True(dictionary.ContainsKey("sum"), "Missing key for the sum of the entries");
+            Assert.True(dictionary.ContainsKey("mult"), "Missing key for the product of the entries");
+            Assert.True(dictionary.Count == count + 2 - neg, "The selected elements were not removed");
+            try
+            {
+                var vsum = Math.Round(dictionary["sum"], 10);
+                var vmult = Math.Round(dictionary["mult"], 10);
+                Assert.True(vsum == Math.Round(sum, 10), $"You should have returned sum: {sum}, but did return sum: {vsum}.");
+                Assert.True(vsum == Math.Round(mult, 10), $"You should have returned mult: {mult} but did return mult: {vmult}.");
+            }
+            catch (KeyNotFoundException ex)
+            {
+                Console.Error.WriteLine(ex.Message);
+            }
+        }
+
+
     }
 }
