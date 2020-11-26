@@ -38,8 +38,8 @@ namespace Exercise.Tests
                 var vmult = Math.Round(outcome["mult"], 10);
                 var vdiv = Math.Round(outcome["div"], 10);
                 Assert.True(vsum == Math.Round(sum, 10), $"You should have returned sum: {sum}, but did return sum: {vsum}.");
-                Assert.True(vsum == Math.Round(mult, 10), $"You should have returned mult: {mult} but did return mult: {vmult}.");
-                Assert.True(vsum == Math.Round(div, 10), $"You should have returned div: {div} but did return div: {vdiv}.");
+                Assert.True(vmult == Math.Round(mult, 10), $"You should have returned mult: {mult} but did return mult: {vmult}.");
+                Assert.True(vdiv == Math.Round(div, 10), $"You should have returned div: {div} but did return div: {vdiv}.");
             }
             catch (KeyNotFoundException ex)
             {
@@ -71,7 +71,7 @@ namespace Exercise.Tests
                 var vsum = Math.Round(dictionary["sum"], 10);
                 var vmult = Math.Round(dictionary["mult"], 10);
                 Assert.True(vsum == Math.Round(sum, 10), $"You should have returned sum: {sum}, but did return sum: {vsum}.");
-                Assert.True(vsum == Math.Round(mult, 10), $"You should have returned mult: {mult} but did return mult: {vmult}.");
+                Assert.True(vmult == Math.Round(mult, 10), $"You should have returned mult: {mult} but did return mult: {vmult}.");
             }
             catch (KeyNotFoundException ex)
             {
@@ -102,7 +102,7 @@ namespace Exercise.Tests
                 var vsum = Math.Round(dictionary["sum"], 10);
                 var vmult = Math.Round(dictionary["mult"], 10);
                 Assert.True(vsum == Math.Round(sum, 10), $"You should have returned sum: {sum}, but did return sum: {vsum}.");
-                Assert.True(vsum == Math.Round(mult, 10), $"You should have returned mult: {mult} but did return mult: {vmult}.");
+                Assert.True(vmult == Math.Round(mult, 10), $"You should have returned mult: {mult} but did return mult: {vmult}.");
             }
             catch (KeyNotFoundException ex)
             {
