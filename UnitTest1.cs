@@ -93,7 +93,7 @@ namespace Exercise.Tests
                 dictionary.Add(values[i + 1], number);
             }
             var count = dictionary.Count;
-            prog.RetrieveCalValues(dictionary, remove);
+            prog.RetrieveCalValuesRigour(dictionary, remove);
             Assert.True(dictionary.ContainsKey("sum"), "Missing key for the sum of the entries");
             Assert.True(dictionary.ContainsKey("mult"), "Missing key for the product of the entries");
             Assert.True(dictionary.Count == count + 2 - neg, "The selected elements were not removed");
